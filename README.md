@@ -49,25 +49,27 @@ URL: {BASE_URL}/login
 Method: POST
 ```
 
-```json
 data = [
+    
     Admin => email: admin@gmail.com, pass: password,
     Editor => email: editor@gmail.com, pass: password,
     Viewer => email: viewer@gmail.com, pass: password
+    
 ]
-```
 
 ### Request
 
-```json
 Headers: { 
+
     Accept: application/json
+
 },
 Body: {
+
     email: data.email,
     password: data.password
+
 }
-```
 
 ### Response
 
@@ -102,16 +104,18 @@ Method: POST
 
 ### Request
 
-```json
 Headers: { 
+
     Accept: application/json
+
 },
 Body: {
+
     name: value,
     email: value@gmail.com,
     password: value123
+
 }
-```
 
 ### Response
 
@@ -141,13 +145,13 @@ Method: GET
 
 ### Request
 
-```json
 Headers: { 
+
     Accept: application/json,
     Authorization: Bearer + TOKEN_AFTER_LOGIN
+
 },
 Body: {}
-```
 
 ### Response
 
@@ -181,7 +185,7 @@ Body: {}
                 "description": "Dolor voluptatum vel soluta ut laboriosam. Tenetur amet iure error eum similique voluptatibus quod tempora. Voluptas omnis quis eligendi doloremque adipisci consequatur consectetur."
             },
             {
-                ...
+                //
             }],
         "status_code": 200
     }
@@ -197,13 +201,13 @@ Method: GET
 
 ### Request
 
-```json
 Headers: { 
+
     Accept: application/json,
     Authorization: Bearer + TOKEN_AFTER_LOGIN
+
 },
 Body: {}
-```
 
 ### Response
 
@@ -231,18 +235,20 @@ Method: POST
 
 ### Request
 
-```json
 Headers: { 
+
     Accept: application/json,
     Authorization: Bearer + TOKEN_AFTER_LOGIN
+
 },
 Body: {
+
     title: book 1
     author: john doe
     year: 2025
     description: lorem ipsum book 1
+
 }
-```
 
 ### Response
 
@@ -272,18 +278,20 @@ Method: PUT
 
 ### Request
 
-```json
 Headers: { 
+
     Accept: application/json,
     Authorization: Bearer + TOKEN_AFTER_LOGIN
+
 },
 Body: {
+
     title: laskar pelangi
     author: john doe
     year: 2020
     description: deskripsi laskar pelangi
+
 }
-```
 
 ### Response
 
@@ -313,13 +321,13 @@ Method: DELETE
 
 ### Request
 
-```json
 Headers: { 
+
     Accept: application/json,
     Authorization: Bearer + TOKEN_AFTER_LOGIN
+
 },
 Body: {}
-```
 
 ### Response
 
