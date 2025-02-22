@@ -50,6 +50,6 @@ class AuthController extends Controller
 
         $this->data['user'] = $user;
 
-        return JSendFormatter::success('Account ', $this->data, 201);
+        return JSendFormatter::success('Account created successfully', $this->data, 201);
     }
 }

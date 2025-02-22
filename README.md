@@ -1,66 +1,333 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Requirement
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Pastikan untuk memiliki versi PHP minimal 8.2
 
-## About Laravel
+## Instalasi
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+```sh
+    git clone https://github.com/gibranar/laravel-books-api-rbac-with-sanctum.git
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+```sh
+    cd laravel-books-api-rbac-with-sanctum
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+```sh
+    composer update
+```
 
-## Learning Laravel
+```sh
+    cp .env.example .env
+```
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+```sh
+    php artisan key:generate
+```
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+```sh
+    php artisan migrate:fresh --seed
+```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+```sh
+    php artisan serve
+```
 
-## Laravel Sponsors
+# REST API
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Gunakan software postman untuk menjalankan API
 
-### Premium Partners
+### BASE_URL
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+```sh
+http://127.0.0.1:8000/api
+```
 
-## Contributing
+## Login
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```sh
+URL: {BASE_URL}/login
+Method: POST
+```
 
-## Code of Conduct
+```json
+data = [
+    Admin => email: admin@gmail.com, pass: password,
+    Editor => email: editor@gmail.com, pass: password,
+    Viewer => email: viewer@gmail.com, pass: password
+]
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Request
 
-## Security Vulnerabilities
+```json
+Headers: { 
+    Accept: application/json
+},
+Body: {
+    email: data.email,
+    password: data.password
+}
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Response
 
-## License
+```json
+{
+    "status": "success",
+    "status_code": 200,
+    "message": "Login Success",
+    "data": {
+        "token": "1|Cmosr7o53C3ddlyeqtMKZNg7SPDpQ4yqp0AOFgXk0a4ac24e",
+        "user": {
+            "id": 1,
+            "name": "Admin",
+            "email": "admin@gmail.com",
+            "email_verified_at": null,
+            "created_at": "2025-02-22T15:46:56.000000Z",
+            "updated_at": "2025-02-22T15:46:56.000000Z"
+        },
+        "role": [
+            "admin"
+        ]
+    }
+}
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Register
+
+```sh
+URL: {BASE_URL}/register
+Method: POST
+```
+
+### Request
+
+```json
+Headers: { 
+    Accept: application/json
+},
+Body: {
+    name: value,
+    email: value@gmail.com,
+    password: value123
+}
+```
+
+### Response
+
+```json
+{
+    "status": "success",
+    "status_code": 201,
+    "message": "Account created successfully",
+    "data": {
+        "user": {
+            "name": "value",
+            "email": "value@gmail.com",
+            "updated_at": "2025-02-22T14:18:10.000000Z",
+            "created_at": "2025-02-22T14:18:10.000000Z",
+            "id": 4
+        }
+    }
+}
+```
+
+## GET All Data
+
+```sh
+URL: {BASE_URL}/books
+Method: GET
+```
+
+### Request
+
+```json
+Headers: { 
+    Accept: application/json,
+    Authorization: Bearer + TOKEN_AFTER_LOGIN
+},
+Body: {}
+```
+
+### Response
+
+```json
+{
+    "status": "success",
+    "status_code": 200,
+    "message": "Success get all books",
+    "data": {
+        "meta": {
+            "from": 1,
+            "to": 25,
+            "total": 50,
+            "per_page": 25,
+            "current_page": 1,
+            "last_page": 2
+        },
+        "books": [
+            {
+                "id": 1,
+                "title": "Consequatur quisquam dolor quod.",
+                "author": "Allene Bergnaum",
+                "year": 2000,
+                "description": "Necessitatibus nobis recusandae blanditiis minima suscipit. Cumque earum vitae ut maiores quaerat. Repellat doloribus pariatur necessitatibus distinctio reiciendis hic. Debitis reiciendis dolorum in dolores esse laboriosam quos eveniet."
+            },
+            {
+                "id": 2,
+                "title": "Est animi.",
+                "author": "Prof. Vincenzo Hauck",
+                "year": 2019,
+                "description": "Dolor voluptatum vel soluta ut laboriosam. Tenetur amet iure error eum similique voluptatibus quod tempora. Voluptas omnis quis eligendi doloremque adipisci consequatur consectetur."
+            },
+            {
+                ...
+            }],
+        "status_code": 200
+    }
+}
+```
+
+## Show Detail
+
+```sh
+URL: {BASE_URL}/books/{id}
+Method: GET
+```
+
+### Request
+
+```json
+Headers: { 
+    Accept: application/json,
+    Authorization: Bearer + TOKEN_AFTER_LOGIN
+},
+Body: {}
+```
+
+### Response
+
+```json
+{
+    "status": "success",
+    "status_code": 200,
+    "message": "Book found",
+    "book": {
+        "id": 4,
+        "title": "Aut quae fuga id.",
+        "author": "Mr. Bobbie Torphy",
+        "year": 1989,
+        "description": "Molestias eum architecto illo et delectus libero. Mollitia possimus minima ipsa quia et sint. Quasi ut autem sed ullam. Qui non adipisci reprehenderit praesentium voluptas."
+    }
+}
+```
+
+## Store Data
+
+```sh
+URL: {BASE_URL}/books
+Method: POST
+```
+
+### Request
+
+```json
+Headers: { 
+    Accept: application/json,
+    Authorization: Bearer + TOKEN_AFTER_LOGIN
+},
+Body: {
+    title: book 1
+    author: john doe
+    year: 2025
+    description: lorem ipsum book 1
+}
+```
+
+### Response
+
+```json
+{
+    "status": "success",
+    "status_code": 201,
+    "message": "Book created",
+    "data": {
+        "book": {
+            "title": "book 1",
+            "author": "john doe",
+            "year": 2025,
+            "description": "lorem ipsum book 1",
+            "id": 51
+        }
+    }
+}
+```
+
+## Update Data
+
+```sh
+URL: {BASE_URL}/books/{id}
+Method: PUT
+```
+
+### Request
+
+```json
+Headers: { 
+    Accept: application/json,
+    Authorization: Bearer + TOKEN_AFTER_LOGIN
+},
+Body: {
+    title: laskar pelangi
+    author: john doe
+    year: 2020
+    description: deskripsi laskar pelangi
+}
+```
+
+### Response
+
+```json
+{
+    "status": "success",
+    "status_code": 200,
+    "message": "Book updated",
+    "data": {
+        "book": {
+            "id": 3,
+            "title": "laskar pelangi",
+            "author": "john doe",
+            "year": 2020,
+            "description": "deskripsi laskar pelangi"
+        }
+    }
+}
+```
+
+## Delete Data
+
+```sh
+URL: {BASE_URL}/books/{id}
+Method: DELETE
+```
+
+### Request
+
+```json
+Headers: { 
+    Accept: application/json,
+    Authorization: Bearer + TOKEN_AFTER_LOGIN
+},
+Body: {}
+```
+
+### Response
+
+```json
+{
+    "status": "success",
+    "status_code": 200,
+    "message": "Book deleted",
+    "data": null
+}
+```
